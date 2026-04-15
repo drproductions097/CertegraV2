@@ -1,0 +1,321 @@
+import React, { useEffect, useRef } from 'react';
+import { 
+  Cpu, MapPin, Zap, HardDrive, Fan, Search, Laptop, Handshake, 
+  Receipt, PackageOpen, Eye, MessageSquare, Star, Phone 
+} from 'lucide-react';
+
+// --- Custom WhatsApp Icon (SVG) ---
+const WhatsAppIcon = ({ className }) => (
+  <svg className={className} viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/>
+  </svg>
+);
+
+// --- Reusable Glassmorphism Card Component ---
+const GlassCard = ({ children, className = "", delay = "0" }) => (
+  <div 
+    className={`bg-white/10 border border-white/20 backdrop-blur-md rounded-2xl p-6 shadow-2xl transition-all duration-300 hover:bg-white/[0.15] hover:-translate-y-1 animate-fade-in ${className}`}
+    style={{ animationDelay: `${delay}ms`, animationFillMode: 'both' }}
+  >
+    {children}
+  </div>
+);
+
+// --- Main Application Component ---
+export default function App() {
+  
+  // Intersection Observer for Scroll Animations
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-play');
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    
+    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-[#020617] text-slate-100 font-sans selection:bg-blue-500/30 overflow-hidden relative">
+      
+      {/* Background Gradient & Effects */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-600/20 rounded-full blur-[120px]"></div>
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-blue-800/20 rounded-full blur-[120px]"></div>
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
+      </div>
+
+      {/* Global Styles for Animations */}
+      <style dangerouslySetInnerHTML={{__html: `
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        @keyframes fadeInUp {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .animate-fade-in {
+          opacity: 0;
+        }
+        
+        .animate-play {
+          animation: fadeInUp 0.8s ease-out forwards;
+        }
+        
+        .glass-badge {
+          background: rgba(255, 255, 255, 0.1);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(8px);
+        }
+      `}} />
+
+      {/* Main Content Container */}
+      <div className="relative z-10">
+
+        {/* --- NAVBAR --- */}
+        <nav className="container mx-auto px-6 py-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="flex items-center gap-2 group cursor-pointer">
+            <Cpu className="w-8 h-8 text-blue-400 group-hover:rotate-12 transition-transform" />
+            <span className="text-2xl font-bold tracking-tight">Certegra</span>
+          </div>
+          <div className="glass-badge flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium animate-on-scroll">
+            <MapPin className="w-4 h-4 text-blue-400" />
+            📍 Atención en Cochabamba
+          </div>
+        </nav>
+
+        {/* --- SLIDE 1: INICIO (El Gancho) --- */}
+        <section className="container mx-auto px-6 min-h-[85vh] flex items-center pt-8 pb-20">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="space-y-8 animate-on-scroll">
+              <h1 className="text-5xl md:text-7xl font-extrabold leading-tight">
+                Tecnología con <span className="text-blue-400 relative inline-block">
+                  integridad.
+                  <span className="absolute bottom-2 left-0 w-full h-3 bg-blue-500/20 -z-10 rounded"></span>
+                </span>
+              </h1>
+              <p className="text-xl md:text-2xl text-slate-300 font-light leading-relaxed">
+                ¿Tu computadora está lenta o calienta mucho? 🔥🐢 <br className="hidden md:block" />
+                <span className="font-medium text-white">Diagnósticos claros. Precios justos.</span><br/>
+                Tu equipo seguro, tu bolsillo también.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <a href="#servicios" className="bg-blue-500 hover:bg-blue-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all text-center">
+                  Ver Servicios
+                </a>
+                <a href="#contacto" className="bg-[#25D366] hover:bg-[#1DA851] text-white px-8 py-4 rounded-xl font-semibold text-lg flex items-center justify-center gap-2 transition-all">
+                  <WhatsAppIcon className="w-6 h-6" />
+                  WhatsApp
+                </a>
+              </div>
+            </div>
+            <div className="relative animate-on-scroll" style={{ animationDelay: '200ms' }}>
+              {/* Decorative elements behind image */}
+              <div className="absolute inset-0 bg-blue-500/20 translate-x-4 translate-y-4 rounded-3xl blur-sm -z-10"></div>
+              <img 
+                src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?auto=format&fit=crop&q=80&w=800" 
+                alt="Técnico reparando computadora" 
+                className="rounded-3xl shadow-2xl object-cover w-full h-[500px] border border-white/10"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* --- SLIDE 2: SERVICIOS TÉCNICOS --- */}
+        <section id="servicios" className="container mx-auto px-6 py-24">
+          <div className="text-center mb-16 animate-on-scroll">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">¿En qué te podemos ayudar? 👇</h2>
+            <p className="text-xl text-slate-400">Soluciones técnicas integrales para que tu herramienta de trabajo vuelva a volar.</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { icon: Zap, title: "Optimización", text: "Cambio a Windows 10 u 11 para que tu equipo trabaje al máximo." },
+              { icon: HardDrive, title: "Formateo Seguro", text: "Dejamos tu equipo como nuevo, cuidando tus documentos valiosos." },
+              { icon: Fan, title: "Mantenimiento", text: "Limpieza profunda y cambio de pasta térmica. Adiós sobrecalentamiento." },
+              { icon: Search, title: "Diagnóstico", text: "Revisamos tu disco duro y componentes para evitar pérdidas de información." },
+              { icon: Laptop, title: "Instalación", text: "Todo el software que necesites: Office, Adobe, utilidades, etc." },
+              { icon: Handshake, title: "Asesoría de Compra", text: "Te ayudamos a evitar estafas en PCs de segunda mano. Compra seguro." }
+            ].map((service, idx) => (
+              <div key={idx} className="animate-on-scroll">
+                <GlassCard delay={idx * 100} className="h-full flex flex-col">
+                  <div className="w-14 h-14 rounded-full bg-blue-500/20 flex items-center justify-center mb-6">
+                    <service.icon className="w-7 h-7 text-blue-400" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+                  <p className="text-slate-300 leading-relaxed flex-grow">{service.text}</p>
+                </GlassCard>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* --- SLIDE 3: EL PROCESO PASO A PASO --- */}
+        <section className="container mx-auto px-6 py-24 relative">
+          <div className="text-center mb-20 animate-on-scroll">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Transparencia Paso a Paso 🔄</h2>
+            <p className="text-xl text-slate-400">No somos una caja negra. Así es como trabajamos para darte seguridad.</p>
+          </div>
+
+          <div className="relative">
+            {/* Horizontal Line for Desktop */}
+            <div className="hidden lg:block absolute top-12 left-[10%] right-[10%] h-0.5 border-t-2 border-dashed border-slate-600 -z-10"></div>
+            
+            <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
+              {[
+                { icon: Laptop, title: "1. Recepción", text: "Diagnóstico inicial frente a ti." },
+                { icon: Receipt, title: "2. Presupuesto Claro", text: "Tabla de costos exacta. Sin sorpresas." },
+                { icon: MessageSquare, title: "3. Reparación", text: "Trabajamos manteniéndote informado por chat." },
+                { icon: PackageOpen, title: "4. Entrega", text: "Devolución rápida y te entregamos tus piezas defectuosas." }
+              ].map((step, idx) => (
+                <div key={idx} className="relative flex flex-col items-center text-center animate-on-scroll">
+                  <div className="w-24 h-24 rounded-full bg-slate-900 border-4 border-blue-500 flex items-center justify-center mb-6 shadow-[0_0_30px_rgba(59,130,246,0.3)] z-10">
+                    <step.icon className="w-10 h-10 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-3">{step.title}</h3>
+                  <p className="text-slate-400">{step.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* --- SLIDE 4: POR QUÉ ELEGIR CERTEGRA --- */}
+        <section className="bg-slate-900/50 py-24 border-y border-white/5">
+          <div className="container mx-auto px-6">
+            <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="order-2 lg:order-1 relative animate-on-scroll">
+                 <div className="absolute inset-0 bg-blue-500/10 -rotate-3 rounded-3xl blur-sm -z-10"></div>
+                <img 
+                  src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&q=80&w=800" 
+                  alt="Cliente feliz" 
+                  className="rounded-3xl shadow-2xl object-cover w-full h-[500px] border border-white/10"
+                />
+              </div>
+              <div className="order-1 lg:order-2 space-y-8 animate-on-scroll">
+                <h2 className="text-4xl md:text-5xl font-bold">¿Por qué elegir Certegra? 🛡️</h2>
+                
+                <GlassCard className="flex gap-6 items-start">
+                  <div className="bg-blue-500/20 p-4 rounded-xl shrink-0">
+                    <Eye className="w-8 h-8 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">Transparencia Operativa</h3>
+                    <p className="text-slate-300 leading-relaxed">¡Cero sorpresas en tu factura! Proceso estructurado, diagnóstico detallado y te devolvemos tus piezas defectuosas antiguas.</p>
+                  </div>
+                </GlassCard>
+
+                <GlassCard className="flex gap-6 items-start">
+                  <div className="bg-blue-500/20 p-4 rounded-xl shrink-0">
+                    <MessageSquare className="w-8 h-8 text-blue-400" />
+                  </div>
+                  <div>
+                    <h3 className="text-2xl font-bold mb-2">Comunicación Profesional</h3>
+                    <p className="text-slate-300 leading-relaxed">Olvídate de rogar por actualizaciones. Te explicamos los problemas en lenguaje sencillo. Seguimiento constante por WhatsApp.</p>
+                  </div>
+                </GlassCard>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* --- SLIDE 5: PREGUNTAS FRECUENTES (FAQ) --- */}
+        <section className="container mx-auto px-6 py-24">
+          <div className="text-center mb-16 animate-on-scroll">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Preguntas Frecuentes ❓</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {[
+              { q: "¿Voy a perder mis archivos?", a: "De ninguna manera. Realizamos un Respaldo Seguro (Backup) antes de cualquier formateo. Tus fotos y documentos están a salvo." },
+              { q: "¿Cuánto tiempo tardan?", a: "El diagnóstico inicial suele completarse en las primeras 24 horas hábiles tras la recepción de tu equipo." },
+              { q: "¿Tienen servicio a domicilio?", a: "Recibimos los equipos en taller para garantizar un entorno seguro y con herramientas adecuadas, pero mantenemos contacto permanente por WhatsApp." },
+              { q: "¿Dan garantía?", a: "Sí, totalmente. Ofrecemos Garantía Real. Si algo relacionado a nuestra reparación falla, lo solucionamos sin costo adicional." }
+            ].map((faq, idx) => (
+              <div key={idx} className="animate-on-scroll">
+                <GlassCard delay={idx * 100} className="h-full">
+                  <h3 className="text-xl font-bold mb-3 text-blue-400">{faq.q}</h3>
+                  <p className="text-slate-300">{faq.a}</p>
+                </GlassCard>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* --- SLIDE 6: RESEÑAS DE CLIENTES --- */}
+        <section className="container mx-auto px-6 py-24 border-t border-white/5">
+          <div className="text-center mb-16 animate-on-scroll">
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">Lo que dicen nuestros clientes ⭐</h2>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {[
+              { name: "Miguel Arancibia", text: "Mi laptop calentaba mucho y sonaba como turbina. Después del mantenimiento quedó silenciosa y rápida. ¡Recomendado!" },
+              { name: "Lucía Rojas", text: "Me ayudaron con el formateo y respaldaron mis fotos que pensé que se iban a perder. Gran servicio, buena explicación." },
+              { name: "Juan Pablo S.", text: "Excelente asesoría para comprar mi PC gamer usada. Me ahorraron dinero y me dieron confianza para hacer la compra segura." }
+            ].map((review, idx) => (
+              <div key={idx} className="animate-on-scroll">
+                <GlassCard delay={idx * 100} className="flex flex-col h-full">
+                  <div className="flex text-yellow-400 mb-4">
+                    {[1,2,3,4,5].map(star => <Star key={star} className="w-5 h-5 fill-current" />)}
+                  </div>
+                  <p className="text-slate-300 italic mb-6 flex-grow">"{review.text}"</p>
+                  <p className="font-bold border-t border-white/10 pt-4">— {review.name}</p>
+                </GlassCard>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* --- SLIDE 7: CONTACTO FINAL --- */}
+        <section id="contacto" className="container mx-auto px-6 py-32 text-center relative">
+          <div className="absolute inset-0 bg-blue-600/5 blur-[100px] rounded-full -z-10"></div>
+          <div className="max-w-3xl mx-auto animate-on-scroll">
+            <h2 className="text-5xl md:text-6xl font-extrabold mb-6 leading-tight">
+              ¿Listo para darle una <span className="text-blue-400">segunda vida</span> a tu PC?
+            </h2>
+            <p className="text-2xl text-slate-300 mb-12">
+              No dejes que un equipo lento retrase tu día a día.
+            </p>
+            
+            <GlassCard className="inline-flex flex-col items-center p-12 max-w-lg mx-auto border-blue-500/30 shadow-[0_0_50px_rgba(59,130,246,0.15)]">
+              <div className="flex flex-col sm:flex-row gap-8 mb-8 text-xl font-medium">
+                <div className="flex items-center gap-3">
+                  <Phone className="w-6 h-6 text-blue-400" />
+                  +591 79353629
+                </div>
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-6 h-6 text-blue-400" />
+                  Cochabamba
+                </div>
+              </div>
+              
+              <a 
+                href="https://wa.me/59179353629" 
+                target="_blank" 
+                rel="noreferrer"
+                className="bg-[#25D366] hover:bg-[#1DA851] text-white px-10 py-5 rounded-2xl font-bold text-2xl flex items-center justify-center gap-4 transition-all hover:scale-105 hover:shadow-[0_0_30px_rgba(37,211,102,0.4)] w-full"
+              >
+                <WhatsAppIcon className="w-8 h-8" />
+                Escríbenos por WhatsApp
+              </a>
+            </GlassCard>
+          </div>
+        </section>
+
+        {/* Footer simple */}
+        <footer className="text-center py-8 text-slate-500 border-t border-white/5">
+          <p>© {new Date().getFullYear()} Certegra. Tecnología con integridad en Cochabamba.</p>
+        </footer>
+
+      </div>
+    </div>
+  );
+}
